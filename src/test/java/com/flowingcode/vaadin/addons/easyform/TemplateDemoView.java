@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons.template;
+package com.flowingcode.vaadin.addons.easyform;
 
 import com.flowingcode.vaadin.addons.DemoLayout;
 import com.flowingcode.vaadin.addons.GithubLink;
@@ -34,7 +34,7 @@ public class TemplateDemoView extends TabbedDemo {
       "https://github.com/FlowingCode/AddonStarter14/blob/master/src/test/java/com/flowingcode/vaadin/addons/template/TemplateDemo.java";
 
   public TemplateDemoView() {
-    addDemo(new TemplateDemo(), TEMPLATE_ADDON_DEMO, TEMPLATE_ADDON_SOURCE);
+    addDemo(new EasyFormDemo(), TEMPLATE_ADDON_DEMO, TEMPLATE_ADDON_SOURCE);
     setSizeFull();
   }
 }

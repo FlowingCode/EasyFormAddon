@@ -18,7 +18,7 @@
  * #L%
  */
 
-package com.flowingcode.vaadin.addons.template;
+package com.flowingcode.vaadin.addons.easyform;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
@@ -29,4 +29,4 @@ import com.vaadin.flow.component.html.Div;
 @NpmPackage(value = "@polymer/paper-input", version = "3.2.1")
 @JsModule("@polymer/paper-input/paper-input.js")
 @Tag("paper-input")
-public class TemplateAddon extends Div {}
+public class EasyForm extends Div {}
