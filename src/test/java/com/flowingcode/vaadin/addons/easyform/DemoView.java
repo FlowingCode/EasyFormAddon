@@ -1,15 +1,15 @@
 /*-
  * #%L
- * Template Add-on
+ * Easy Form Add-on
  * %%
- * Copyright (C) 2021 Flowing Code
+ * Copyright (C) 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,15 +18,19 @@
  * #L%
  */
 
-package com.flowingcode.vaadin.addons.template;
+package com.flowingcode.vaadin.addons.easyform;
 
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.router.Route;
 
 @SuppressWarnings("serial")
-@NpmPackage(value = "@polymer/paper-input", version = "3.2.1")
-@JsModule("@polymer/paper-input/paper-input.js")
-@Tag("paper-input")
-public class TemplateAddon extends Div {}
+@Route("")
+public class DemoView extends VerticalLayout implements BeforeEnterObserver {
+
+  @Override
+  public void beforeEnter(final BeforeEnterEvent event) {
+    event.forwardTo(EasyFormDemoView.class);
+  }
+}

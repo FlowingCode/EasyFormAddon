@@ -17,15 +17,26 @@
  * limitations under the License.
  * #L%
  */
-package com.flowingcode.vaadin.addons;
 
+package com.flowingcode.vaadin.addons.easyform;
+
+import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.RouterLayout;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
+@DemoSource
+@PageTitle("Basic")
 @SuppressWarnings("serial")
-public class DemoLayout extends Div implements RouterLayout {
+@Route(value = "easy-form/basic", layout = EasyFormDemoView.class)
+public class EasyFormBasicDemo extends Div {
 
-  public DemoLayout() {
-    setSizeFull();
+  public EasyFormBasicDemo() {
+    // A fully functional form in three lines: fields, labels, and Bean Validation
+    // constraints are derived from the Person class.
+    EasyForm<Person> form = new EasyForm<>(Person.class);
+    form.setSaveAction(person -> Notification.show("Saved " + person.getFirstName()));
+    add(form);
   }
 }
