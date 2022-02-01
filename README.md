@@ -1,22 +1,22 @@
-[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/template-addon)
-[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/app-layout-addon.svg)](https://vaadin.com/directory/component/template-addon)
-[![Build Status](https://jenkins.flowingcode.com/job/template-addon/badge/icon)](https://jenkins.flowingcode.com/job/template-addon)
+[![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/easy-form-addon)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/app-layout-addon.svg)](https://vaadin.com/directory/component/easy-form-addon)
+[![Build Status](https://jenkins.flowingcode.com/job/easy-form-addon/badge/icon)](https://jenkins.flowingcode.com/job/easy-form-addon)
 
-# Template Add-on
+# Easy Form Add-on
 
-This is a template project for building new Vaadin 14 addons
+This Addon allows to create forms automatically by retrieving metadata from an associated bean and then automatically creating suitable fields.
 
 ## Features
 
-* List the features of your addon in here
+* Automatic Form creation and binder configuration
 
 ## Online demo
 
-[Online demo here](http://addonsv14.flowingcode.com/template)
+[Online demo here](http://addonsv14.flowingcode.com/easyform)
 
 ## Download release
 
-[Available in Vaadin Directory](https://vaadin.com/directory/component/template-addon)
+[Available in Vaadin Directory](https://vaadin.com/directory/component/easy-form-addon)
 
 ## Building and running demo
 
@@ -27,7 +27,7 @@ To see the demo, navigate to http://localhost:8080/
 
 ## Release notes
 
-See [here](https://github.com/FlowingCode/TemplateAddon/releases)
+See [here](https://github.com/FlowingCode/EasyFormAddon/releases)
 
 ## Issue tracking
 
@@ -48,7 +48,7 @@ Contributions are welcome, but there are no guarantees that they are accepted as
 
 Add-on is distributed under Apache License 2.0. For license terms, see LICENSE.txt.
 
-TEMPLATE_ADDON is written by Flowing Code S.A.
+Easy Form Addon is written by Flowing Code S.A.
 
 # Developer Guide
 
