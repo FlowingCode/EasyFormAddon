@@ -2,7 +2,7 @@
  * #%L
  * Easy Form Add-on
  * %%
- * Copyright (C) 2023 Flowing Code
+ * Copyright (C) 2026 Flowing Code
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +20,23 @@
 
 package com.flowingcode.vaadin.addons.easyform;
 
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.JsModule;
-import com.vaadin.flow.component.dependency.NpmPackage;
+import com.flowingcode.vaadin.addons.demo.DemoSource;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 
+@DemoSource
+@PageTitle("Basic")
 @SuppressWarnings("serial")
-@NpmPackage(value = "@polymer/paper-input", version = "3.2.1")
-@JsModule("@polymer/paper-input/paper-input.js")
-@Tag("paper-input")
-public class EasyFormAddon extends Div {}
+@Route(value = "easy-form/basic", layout = EasyFormDemoView.class)
+public class EasyFormBasicDemo extends Div {
+
+  public EasyFormBasicDemo() {
+    // A fully functional form in three lines: fields, labels, and Bean Validation
+    // constraints are derived from the Person class.
+    EasyForm<Person> form = new EasyForm<>(Person.class);
+    form.setSaveAction(person -> Notification.show("Saved " + person.getFirstName()));
+    add(form);
+  }
+}

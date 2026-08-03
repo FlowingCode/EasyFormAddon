@@ -12,16 +12,16 @@
     <url>https://www.flowingcode.com/en/open-source/</url>
 
     <properties>
-        <vaadin.version>24.1.2</vaadin.version>
-        <selenium.version>4.10.0</selenium.version>
+        <vaadin.version>24.10.8</vaadin.version>
+        <selenium.version>4.44.0</selenium.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
-        <jetty.version>11.0.12</jetty.version>
-        <flowingcode.commons.demo.version>3.8.0</flowingcode.commons.demo.version>
-        <frontend.hotdeploy>true</frontend.hotdeploy>
+        <jetty.version>11.0.20</jetty.version>
+        <flowingcode.commons.demo.version>5.3.1</flowingcode.commons.demo.version>
+        <lombok.version>1.18.46</lombok.version>
     </properties>
 
     <organization>
@@ -45,13 +45,6 @@
         <tag>master</tag>
     </scm>
 
-    <distributionManagement>
-       <repository>
-         <id>ossrh</id>
-         <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-      </repository>
-    </distributionManagement>
-
     <developers>
         <developer>
             <id>flowingcode</id>
@@ -69,63 +62,37 @@
                 <scope>import</scope>
                 <version>${vaadin.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.flowingcode.vaadin.addons.demo</groupId>
-                <artifactId>commons-demo</artifactId>
-                <version>${flowingcode.commons.demo.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <repositories>
-        <repository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>Vaadin Directory</id>
-            <url>https://maven.vaadin.com/vaadin-addons</url>
-        </repository>
-        <!-- Repository needed for prerelease versions of Vaadin -->
-        <repository>
-            <id>Vaadin prereleases</id>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </repository>
-        <!-- Repository needed for the snapshot versions of Vaadin -->
-        <repository>
-            <id>vaadin-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <url>https://repo.maven.apache.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-        <!-- Repository needed for prerelease versions of Vaadin -->
-        <pluginRepository>
-            <id>Vaadin prereleases</id>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>vaadin-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
-            <releases><enabled>false</enabled></releases>
-        </pluginRepository>
-    </pluginRepositories>
 
     <dependencies>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-core</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.flowingcode.vaadin.addons.demo</groupId>
+            <artifactId>commons-demo</artifactId>
+            <version>${flowingcode.commons.demo.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -135,11 +102,6 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-testbench</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.flowingcode.vaadin.addons.demo</groupId>
-            <artifactId>commons-demo</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -158,7 +120,19 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.1.1</version>
+            <version>5.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.2.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+            <version>5.0.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -169,10 +143,25 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-release-plugin</artifactId>
                     <version>3.0.1</version>
                     <configuration>
                         <tagNameFormat>@{project.version}</tagNameFormat>
+                        <releaseProfiles>release</releaseProfiles>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -210,12 +199,34 @@
                 </configuration>
             </plugin>
             <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}</directory>
+                            <includes>
+                                <include>tsconfig.json</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>1.14</version>
+                <version>2.3.0</version>
                 <configuration>
                     <licenseName>apache_v2</licenseName>
                     <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+                    <excludes>
+                        <exclude>**/main/dev-bundle/**</exclude>
+                        <exclude>**/main/bundles/**</exclude>
+                        <exclude>**/main/frontend/**</exclude>
+                    </excludes>
+                    <extraExtensions>
+                        <tsx>java</tsx>
+                    </extraExtensions>
                 </configuration>
             </plugin>
             <plugin>
@@ -242,7 +253,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
-                    <scanIntervalSeconds>3</scanIntervalSeconds>
+                    <scan>3</scan>
                     <!-- Use test scope because the UI/demo classes are in the test package. -->
                     <useTestScope>true</useTestScope>
                     <webApp>
@@ -254,6 +265,9 @@
                     <supportedPackagings>
                         <supportedPackaging>jar</supportedPackaging>
                     </supportedPackagings>
+                    <systemProperties>
+                        <vaadin.frontend.hotdeploy>true</vaadin.frontend.hotdeploy>
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>
@@ -281,7 +295,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>3.11.1</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -294,7 +308,10 @@
                         <configuration>
                             <quiet>true</quiet>
                             <doclint>none</doclint>
-                            <additionalparam>-Xdoclint:none</additionalparam>
+							<failOnWarnings>true</failOnWarnings>
+                            <links>
+                                <link>https://javadoc.flowingcode.com/artifact/com.vaadin/vaadin-platform-javadoc/${vaadin.version}</link>
+                            </links>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -429,7 +446,7 @@
             <id>gpg</id>
             <activation>
                 <property>
-                    <name>env.gpg.passphrase</name>
+                    <name>env.MAVEN_GPG_PASSPHRASE</name>
                 </property>
             </activation>
             <build>
@@ -437,7 +454,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.1.0</version>
+                        <version>3.2.7</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -445,9 +462,6 @@
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
-                                <configuration>
-                                    <passphrase>${env.gpg.passphrase}</passphrase>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -457,8 +471,21 @@
 
         <profile>
             <id>demo-jar</id>
-            <build>        
+            <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <annotationProcessorPaths combine.children="append">
+                                <path>
+                                    <groupId>com.flowingcode.vaadin.addons.demo</groupId>
+                                    <artifactId>commons-demo-processor</artifactId>
+                                    <version>${flowingcode.commons.demo.version}</version>
+                                </path>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
@@ -474,6 +501,7 @@
                                         <exclude>**/it/*</exclude>
                                         <exclude>**/DemoView.class</exclude>
                                         <exclude>**/DemoLayout.class</exclude>
+                                        <exclude>**/AppShellConfiguratorImpl.class</exclude>
                                     </excludes>
                                 </configuration>
                             </execution>
@@ -481,8 +509,199 @@
                     </plugin>
                 </plugins>
             </build>
+            <dependencies>
+                <dependency>
+                    <groupId>com.flowingcode.vaadin.addons.demo</groupId>
+                    <artifactId>commons-demo-processor</artifactId>
+                    <version>${flowingcode.commons.demo.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
         </profile>
-        
+
+        <profile>
+            <id>demo-war</id>
+            <properties>
+                <vaadin.productionMode>true</vaadin.productionMode>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-core</artifactId>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>com.vaadin</groupId>
+                            <artifactId>vaadin-dev</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>com.flowingcode.vaadin.addons.demo</groupId>
+                    <artifactId>commons-demo</artifactId>
+                    <version>${flowingcode.commons.demo.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                       <groupId>org.apache.maven.plugins</groupId>
+                       <artifactId>maven-antrun-plugin</artifactId>
+                       <version>1.7</version>
+                       <executions>
+                          <execution>
+                          <id>copy-demo</id>
+                          <phase>process-sources</phase>
+                          <goals>
+                             <goal>run</goal>
+                          </goals>
+                          <configuration>
+                             <target name="copy-demo">
+                                <copy todir="${project.basedir}/src/main" failonerror="false">
+                                    <fileset dir="${project.basedir}/src/test">
+                                        <include name="**"/>
+                                        <exclude name="**/it/*"/>
+                                        <exclude name="**/test/*"/>
+                                    </fileset>
+                                </copy>
+                                <copy todir="${project.basedir}/src/main/resources/META-INF/resources/frontend" failonerror="false">
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
+                                </copy>
+                                <delete failonerror="false">
+                                    <fileset dir="${project.basedir}/src/main/resources/META-INF/frontend"/>
+                                </delete>
+                             </target>
+                          </configuration>
+                       </execution>
+                     </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>com.vaadin</groupId>
+                        <artifactId>vaadin-maven-plugin</artifactId>
+                        <version>${vaadin.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>prepare-frontend</goal>
+                                    <goal>build-frontend</goal>
+                                </goals>
+                                <phase>compile</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>war</goal>
+                                </goals>
+                                <configuration>
+                                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>0.8.0</version>
+                        <extensions>true</extensions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>dance</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-clean-plugin</artifactId>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>package.json</include>
+                                        <include>package-lock.json</include>
+                                        <include>tsconfig.json</include>
+                                        <include>tsconfig.json.*</include>
+                                        <include>types.d.ts</include>
+                                        <include>types.d.ts.*</include>
+                                        <include>vite.config.ts</include>
+                                        <include>vite.generated.ts</include>
+                                        <include>webpack.config.js</include>
+                                        <include>webpack.generated.js</include>
+                                    </includes>
+                                </fileset>
+                                <fileset>
+                                    <directory>${project.basedir}/src/main/frontend</directory>
+                                    <includes>
+                                        <include>index.html</include>
+                                    </includes>
+                                </fileset>
+                                <fileset>
+                                    <directory>${project.basedir}/src/main/frontend/generated</directory>
+                                </fileset>
+                                <fileset>
+                                    <directory>${project.basedir}/node_modules</directory>
+                                </fileset>
+                                <fileset>
+                                    <directory>${project.basedir}/src/main/bundles</directory>
+                                </fileset>
+                                <fileset>
+                                    <directory>${project.basedir}/src/main/dev-bundle</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>v25</id>
+            <properties>
+                <maven.compiler.source>21</maven.compiler.source>
+                <maven.compiler.target>21</maven.compiler.target>
+                <vaadin.version>25.2.4</vaadin.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>com.vaadin</groupId>
+                    <artifactId>vaadin-dev</artifactId>
+                    <optional>true</optional>
+                </dependency>
+                <dependency>
+                    <groupId>org.ow2.asm</groupId>
+                    <artifactId>asm</artifactId>
+                    <version>9.8</version>
+                    <optional>true</optional>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.servlet</groupId>
+                    <artifactId>jakarta.servlet-api</artifactId>
+                    <version>6.1.0</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 
 </project>
