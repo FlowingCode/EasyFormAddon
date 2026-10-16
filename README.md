@@ -2,6 +2,7 @@
 [![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/easy-form-add-on.svg)](https://vaadin.com/directory/component/easy-form-add-on)
 [![Build Status](https://jenkins.flowingcode.com/job/easy-form-addon/badge/icon)](https://jenkins.flowingcode.com/job/easy-form-addon)
 [![Maven Central](https://img.shields.io/maven-central/v/com.flowingcode.vaadin.addons/easy-form-addon)](https://mvnrepository.com/artifact/com.flowingcode.vaadin.addons/easy-form-addon)
+[![Javadoc](https://img.shields.io/badge/javadoc-00b4f0)](https://javadoc.flowingcode.com/artifact/com.flowingcode.vaadin.addons/easy-form-addon)
 
 # Easy Form Add-on
 
